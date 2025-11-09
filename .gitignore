@@ -1,0 +1,12 @@
+# Ignore runtime/log/backup files
+logs/
+backups/
+buckets/
+*.log
+*.tsv
+*.zip
+*.bak
+*.tmp
+*~
+wpq
+__pycache__/
