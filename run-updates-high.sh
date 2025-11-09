@@ -2,6 +2,12 @@
 set -euo pipefail
 cd /www/urd_277/public
 
+# Load environment-specific config, if it exists
+if [ -f "maintenance/env-config.sh" ]; then
+  echo "🔹 Loading config from maintenance/env-config.sh..."
+  source "maintenance/env-config.sh"
+fi
+
 QWP="maintenance/wpq"
 BUCKETS="maintenance/buckets"
 STAMP="$(date +%F-%H%M%S)"
@@ -43,13 +49,7 @@ while read -r SLUG; do
   $QWP cache flush        >/dev/null 2>&1 || true
 
   echo "🔹 Validate after $SLUG…" | tee -a "$LOGFILE"
-  if ! BASE_URL="${BASE_URL:-https://env-urd-staging1108.kinsta.cloud}" \
-       PDP_URL="${PDP_URL:-https://env-urd-staging1108.kinsta.cloud/magnuson-supercharger-2005-2015-tacoma-v6/}" \
-       CART_URL="${CART_URL:-https://env-urd-staging1108.kinsta.cloud/cart/}" \
-       CHECKOUT_URL="${CHECKOUT_URL:-https://env-urd-staging1108.kinsta.cloud/checkout/}" \
-       ADMIN_PATH="${ADMIN_PATH:-/piads/}" \
-       FOOTER_TEXT="${FOOTER_TEXT:-Terms & Conditions}" \
-       bash maintenance/validate-site.sh; then
+  if ! bash maintenance/validate-site.sh; then
     echo "❌ Validation failed after $SLUG → rolling back to $CUR_VER" | tee -a "$LOGFILE"
     if $QWP plugin install "$SLUG" --version="$CUR_VER" --force | tee -a "$LOGFILE"; then
       echo "✅ Rolled back $SLUG to $CUR_VER" | tee -a "$LOGFILE"
@@ -78,10 +78,24 @@ TOTAL_SKIPPED=$(grep -ciE "already (up to date|updated|at the latest version)" "
 echo "🧩  ${TOTAL_ATTEMPTED:-0} plugin updates attempted"
 echo "✅  ${TOTAL_SUCCESS:-0} successfully updated"
 echo "⏭️  ${TOTAL_SKIPPED:-0} already up-to-date"
-if [ "${TOTAL_ATTEMPTED:-0}" -gt "${TOTAL_SUCCESS:-0}" ]; then
-  echo "⚠️  $(( TOTAL_ATTEMPTED - TOTAL_SUCCESS )) failed (see $LOGDIR/failures.log)"
+
+FAILED_COUNT=$(( TOTAL_ATTEMPTED - TOTAL_SUCCESS ))
+if [ "$FAILED_COUNT" -gt 0 ]; then
+    echo "⚠️  $FAILED_COUNT failed or were rolled back"
 fi
 
+# --- List Failures / Rollbacks ---
+# We find rollbacks by looking for our [CULPRIT] tag in the log
+ROLLED_BACK_PLUGINS=$(grep "\[CULPRIT\]" "$LOGFILE" 2>/dev/null | sed -E 's/.*\[CULPRIT\] ([^ ]+).*/\1/' | sort -u)
+
+if [ -n "$ROLLED_BACK_PLUGINS" ]; then
+    echo "────────────────────────────"
+    echo "❌  Rolled Back Plugins:"
+    echo "$ROLLED_BACK_PLUGINS" | sed 's/^/ - /'
+fi
+
+# --- List Successful ---
+# This logic is specific to the 'high' script and is correct
 UPDATED_PLUGINS=$(
   { grep -E "Success: (Updated|Installed)" "$LOGFILE" 2>/dev/null \
       | sed -E "s/.*‘([^’]+)’\..*/\1/"; \
@@ -92,10 +106,19 @@ UPDATED_PLUGINS=$(
 
 if [ -n "$UPDATED_PLUGINS" ]; then
   echo "────────────────────────────"
-  echo "✅  Updated:"
+  echo "✅  Updated Plugins:"
   echo "$UPDATED_PLUGINS" | sed 's/^/ - /'
 else
   echo "ℹ️  No plugins updated."
+fi
+
+# --- Show Failure Analysis Log ---
+# This is still useful for any non-rollback failures
+FAILURE_LOG="$LOGDIR/failures.log"
+if [ -s "$FAILURE_LOG" ]; then 
+  echo "────────────────────────────"
+  echo "ℹ️  Failure Analysis (from analyze-update-log.sh):"
+  cat "$FAILURE_LOG" | sed 's/^/ - /'
 fi
 
 echo "────────────────────────────"

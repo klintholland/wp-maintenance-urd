@@ -2,6 +2,12 @@
 set -euo pipefail
 cd /www/urd_277/public
 
+# Load environment-specific config, if it exists
+if [ -f "maintenance/env-config.sh" ]; then
+  echo "🔹 Loading config from maintenance/env-config.sh..."
+  source "maintenance/env-config.sh"
+fi
+
 QWP="maintenance/wpq"
 BUCKETS="maintenance/buckets"
 STAMP="$(date +%F-%H%M%S)"
@@ -35,12 +41,6 @@ $QWP transient delete --all >/dev/null 2>&1 || true
 $QWP cache flush        >/dev/null 2>&1 || true
 
 echo "🔹 Validate…" | tee -a "$LOGFILE"
-BASE_URL="${BASE_URL:-https://env-urd-staging1109.kinsta.cloud}" \
-PDP_URL="${PDP_URL:-https://env-urd-staging1109.kinsta.cloud/magnuson-supercharger-2005-2015-tacoma-v6/}" \
-CART_URL="${CART_URL:-https://env-urd-staging1109.kinsta.cloud/cart/}" \
-CHECKOUT_URL="${CHECKOUT_URL:-https://env-urd-staging1109.kinsta.cloud/checkout/}" \
-ADMIN_PATH="${ADMIN_PATH:-/piads/}" \
-FOOTER_TEXT="${FOOTER_TEXT:-Terms & Conditions}" \
 bash maintenance/validate-site.sh || { echo "❌ MEDIUM validation failed"; }
 
 echo "🔹 Post-inventory" | tee "$LOGDIR/medium-post.tsv"
