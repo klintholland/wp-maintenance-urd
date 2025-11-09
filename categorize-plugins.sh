@@ -18,11 +18,8 @@ jq -r '.medium[]' "$MANIFEST" | sort -u > "$OUTDIR/medium.manifest"
 jq -r '.low[]' "$MANIFEST" | sort -u > "$OUTDIR/low.manifest"
 
 for tier in high medium low; do
-  # Intersect manifest with live
-  grep -Fxf "$OUTDIR/$tier.manifest" maintenance/_live_plugins.txt | sort -u > "$OUTDIR/$tier.live"
-  # From those, keep only ones with updates available and active (for low/medium bulk)
-  $QWP plugin list --status=active --update=available --field=name > "$OUTDIR/_active_updates.txt"
-  grep -Fxf "$OUTDIR/$tier.live" "$OUTDIR/_active_updates.txt" | sort -u > "$OUTDIR/$tier.to_update"
+  # Intersect manifest with live. Add || true so 'grep' doesn't fail on "no matches".
+  grep -Fxf "$OUTDIR/$tier.manifest" maintenance/_live_plugins.txt | sort -u > "$OUTDIR/$tier.live" || true
 done
 
 echo "Buckets ready in $OUTDIR:"

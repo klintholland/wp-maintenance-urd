@@ -52,26 +52,43 @@ echo ""
 echo "────────────────────────────"
 echo "📊 Generating update summary..."
 
-TOTAL_ATTEMPTED=$(grep -cE "Updating|Installing the latest version" "$LOGFILE" 2>/dev/null || echo 0)
-TOTAL_SUCCESS=$(grep -cE "Success: (Updated|Installed)"            "$LOGFILE" 2>/dev/null || echo 0)
+# Get total from the "Success: Updated X of Y plugins." line
+TOTAL_SUCCESS=$(grep -E "Success: Updated [0-9]+ of [0-9]+ plugins" "$LOGFILE" | sed -E 's/Success: Updated ([0-9]+) of .*/\1/' 2>/dev/null || echo 0)
+
+# Get attempted from the same line "X of Y"
+TOTAL_ATTEMPTED=$(grep -E "Success: Updated [0-9]+ of [0-9]+ plugins" "$LOGFILE" | sed -E 's/Success: Updated [0-9]+ of ([0-9]+) plugins.*/\1/' 2>/dev/null || echo 0)
+
+# Skipped is still valid
 TOTAL_SKIPPED=$(grep -ciE "already (up to date|updated|at the latest version)" "$LOGFILE" 2>/dev/null || echo 0)
 
 echo "🧩  ${TOTAL_ATTEMPTED:-0} plugin updates attempted"
 echo "✅  ${TOTAL_SUCCESS:-0} successfully updated"
 echo "⏭️  ${TOTAL_SKIPPED:-0} already up-to-date"
-if [ "${TOTAL_ATTEMPTED:-0}" -gt "${TOTAL_SUCCESS:-0}" ]; then
-  echo "⚠️  $(( TOTAL_ATTEMPTED - TOTAL_SUCCESS )) failed (see $LOGDIR/failures.log)"
+
+FAILED_COUNT=$(( TOTAL_ATTEMPTED - TOTAL_SUCCESS ))
+if [ "$FAILED_COUNT" -gt 0 ]; then
+    echo "⚠️  $FAILED_COUNT failed"
 fi
 
-UPDATED_PLUGINS=$(grep -E "Success: (Updated|Installed)" "$LOGFILE" 2>/dev/null \
-  | sed -E "s/.*‘([^’]+)’\..*/\1/" | sort -u)
+# --- List Successful ---
+UPDATED_PLUGINS=$(grep -E "\s(Updated|Installed)$" "$LOGFILE" 2>/dev/null | awk '{print $1}' | sort -u)
 
 if [ -n "$UPDATED_PLUGINS" ]; then
   echo "────────────────────────────"
-  echo "✅  Updated:"
+  echo "✅  Updated Plugins:"
   echo "$UPDATED_PLUGINS" | sed 's/^/ - /'
-else
-  echo "ℹ️  No plugins updated."
+elif [ "${TOTAL_SUCCESS:-0}" -eq 0 ]; then
+  echo "ℹ️  No plugins were updated."
+fi
+
+# --- List Failures ---
+FAILURE_LOG="$LOGDIR/failures.log"
+# Check if the failures.log file exists and is not empty
+if [ -s "$FAILURE_LOG" ]; then 
+  echo "────────────────────────────"
+  echo "❌  Failed Updates (from analyze-update-log.sh):"
+  # Print the contents of the failure log, adding a bullet point to each line
+  cat "$FAILURE_LOG" | sed 's/^/ - /'
 fi
 
 echo "────────────────────────────"
