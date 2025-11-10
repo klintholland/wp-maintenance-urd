@@ -1,0 +1,6 @@
+#!/bin/bash
+# Quiet WP-CLI wrapper for URD maintenance
+export WP_DEBUG=false
+export WP_DEBUG_DISPLAY=0
+export WP_CLI_SILENCE_PHP_ERRORS=1
+wp --no-color "$@" 2>/dev/null

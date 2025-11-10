@@ -8,5 +8,4 @@ buckets/
 *.bak
 *.tmp
 *~
-wpq
 __pycache__/
