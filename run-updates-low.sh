@@ -38,7 +38,7 @@ $QWP cache flush        >/dev/null 2>&1 || true
 
 # --- Validation (staging defaults; override with env vars when needed)
 echo "🔹 Validate…" | tee -a "$LOGFILE"
-bash maintenance/validate-site.sh || { echo "❌ LOW validation failed"; }
+LOGDIR="$LOGDIR" bash maintenance/validate-site.sh || { echo "❌ LOW validation failed"; }
 
 # --- Post-inventory
 echo "🔹 Post-inventory" | tee "$LOGDIR/low-post.tsv"
@@ -52,13 +52,9 @@ echo ""
 echo "────────────────────────────"
 echo "📊 Generating update summary..."
 
-# Get total from the "Success: Updated X of Y plugins." line
-TOTAL_SUCCESS=$(grep -E "Success: Updated [0-9]+ of [0-9]+ plugins" "$LOGFILE" | sed -E 's/Success: Updated ([0-9]+) of .*/\1/' 2>/dev/null || echo 0)
-
-# Get attempted from the same line "X of Y"
-TOTAL_ATTEMPTED=$(grep -E "Success: Updated [0-9]+ of [0-9]+ plugins" "$LOGFILE" | sed -E 's/Success: Updated [0-9]+ of ([0-9]+) plugins.*/\1/' 2>/dev/null || echo 0)
-
-# Skipped is still valid
+# NEW: Count plugins from the results table
+TOTAL_ATTEMPTED=$(grep -cE "\s(Updated|Installed|Error)$" "$LOGFILE" 2>/dev/null || echo 0)
+TOTAL_SUCCESS=$(grep -cE "\s(Updated|Installed)$" "$LOGFILE" 2>/dev/null || echo 0)
 TOTAL_SKIPPED=$(grep -ciE "already (up to date|updated|at the latest version)" "$LOGFILE" 2>/dev/null || echo 0)
 
 echo "🧩  ${TOTAL_ATTEMPTED:-0} plugin updates attempted"

@@ -49,7 +49,7 @@ while read -r SLUG; do
   $QWP cache flush        >/dev/null 2>&1 || true
 
   echo "🔹 Validate after $SLUG…" | tee -a "$LOGFILE"
-  if ! bash maintenance/validate-site.sh; then
+  if ! LOGDIR="$LOGDIR" bash maintenance/validate-site.sh; then
     echo "❌ Validation failed after $SLUG → rolling back to $CUR_VER" | tee -a "$LOGFILE"
     if $QWP plugin install "$SLUG" --version="$CUR_VER" --force | tee -a "$LOGFILE"; then
       echo "✅ Rolled back $SLUG to $CUR_VER" | tee -a "$LOGFILE"

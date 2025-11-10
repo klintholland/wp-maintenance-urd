@@ -12,8 +12,14 @@ ADMIN_PATH="${ADMIN_PATH:-/piads/}"   # set to /wp-admin/ on sites without the r
 
 QWP="/www/urd_277/public/maintenance/wpq"
 
-STAMP="$(date +%F-%H%M%S)"
-OUTDIR="/www/urd_277/public/maintenance/logs/$STAMP"
+# Use the LOGDIR from the parent script if it's set.
+# Otherwise, create a new one (for standalone runs).
+if [ -z "${LOGDIR:-}" ]; then
+  STAMP="$(date +%F-%H%M%S)"
+  OUTDIR="/www/urd_277/public/maintenance/logs/$STAMP"
+else
+  OUTDIR="$LOGDIR"
+fi
 mkdir -p "$OUTDIR"
 
 curl_check () {

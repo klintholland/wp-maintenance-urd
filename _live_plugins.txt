@@ -14,6 +14,7 @@ disable-emails
 elementor
 elementor-pro
 elementor-ymm
+woocommerce-filter-orders-by-product
 woocommerce-google-analytics-integration
 heartbeat-control
 ignitewoo-updater
@@ -45,7 +46,6 @@ woocommerce-brands-urd
 woocommerce-conditional-shipping-and-payments
 woocommerce-dynamic-pricing
 woocommerce-shipping-fedex
-woocommerce-filter-orders-by-product
 woocommerce-gateway-affirm
 woocommerce-multiple-boxes-shipping
 woocommerce-order-status-manager
