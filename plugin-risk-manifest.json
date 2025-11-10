@@ -10,23 +10,15 @@
     "standard-box-sizes",
     "woocommerce-advanced-shipping-packages",
     "woocommerce-multiple-boxes-shipping",
-    "woocommerce-shipment-tracking",
     "woocommerce-product-addons",
     "woocommerce-dynamic-pricing",
-    "woocommerce-sequential-order-numbers-pro",
-    "woocommerce-order-status-manager",
     "woocommerce-conditional-shipping-and-payments",
     "woocommerce-zapier",
     "checkout-for-woocommerce",
     "elementor",
     "elementor-pro",
     "ultimate-elementor",
-    "jet-menu",
-    "woo-vehicle-parts-finder-ymm",
     "elementor-ymm",
-    "urd-woocommerce-downloads",
-    "woocommerce-pip",
-    "woocommerce-pip-custom-items",
     "astra-addon"
   ],
   "medium": [
@@ -46,11 +38,16 @@
     "woocommerce-filter-orders-by-product",
     "woocommerce-brands",
     "woocommerce-brands-urd",
+    "woocommerce-pip",
+    "woocommerce-sequential-order-numbers-pro",
+    "woocommerce-order-status-manager",
+    "woocommerce-shipment-tracking",
     "admin-menu-editor",
     "adminimize",
     "bloom",
     "simple-history",
-    "amazon-s3-and-cloudfront-pro"
+    "amazon-s3-and-cloudfront-pro",
+    "jet-menu"
   ],
   "low": [
     "advanced-custom-fields-pro",
@@ -65,6 +62,9 @@
     "woo-update-manager",
     "urd-wordpress",
     "urd-custom-maintenance",
-    "elementor-responsive-image"
+    "elementor-responsive-image",
+    "woocommerce-pip-custom-items",
+    "urd-woocommerce-downloads",
+    "woo-vehicle-parts-finder-ymm",
   ]
 }
