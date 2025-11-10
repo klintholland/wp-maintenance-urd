@@ -14,6 +14,10 @@ STAMP="$(date +%F-%H%M%S)"
 LOGDIR="/www/urd_277/public/maintenance/logs/$STAMP"
 mkdir -p "$LOGDIR"
 
+# Deactivate maintenance plugin to allow WP-CLI to run
+echo "🔹 Deactivating 'urd-custom-maintenance' plugin..."
+$QWP plugin deactivate urd-custom-maintenance || true
+
 bash maintenance/categorize-plugins.sh
 
 HIGH="$BUCKETS/high.to_update"
