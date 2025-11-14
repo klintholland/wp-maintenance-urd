@@ -1,5 +1,4 @@
 # Ignore runtime/log/backup files
-logs/
 backups/
 buckets/
 *.log
