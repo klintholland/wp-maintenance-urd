@@ -29,7 +29,16 @@ echo "🚀 Starting $TIER_NAME_UPPER tier update process... (Logs: $LOGDIR)"
 
 # Deactivate maintenance plugin to allow WP-CLI to run
 echo "🔹 Deactivating 'urd-custom-maintenance' plugin..."
-$QWP plugin deactivate urd-custom-maintenance || true
+# Use standard deactivate, but if that fails (e.g. plugin HTML),
+# try to force-move it as a fallback.
+if ! $QWP plugin deactivate urd-custom-maintenance 2>/dev/null; then
+    echo "🔹 Deactivate failed, trying force-move..."
+    mv wp-content/plugins/urd-custom-maintenance wp-content/plugins/urd-custom-maintenance.DEACTIVATED >/dev/null 2>&1 || true
+    $QWP cache flush >/dev/null 2>&1 || true
+else
+    echo "✅ 'urd-custom-maintenance' is deactivated."
+fi
+
 
 # Always rebuild buckets to get the latest list
 bash maintenance/categorize-plugins.sh
@@ -95,8 +104,15 @@ echo ""
 echo "────────────────────────────"
 echo "📊 Generating update summary for $TIER_NAME_UPPER..."
 
-TOTAL_ATTEMPTED=$(grep -cE "Updating|Installing the latest version" "$LOGFILE" 2>/dev/null || echo 0)
-TOTAL_SUCCESS=$(grep -cE "Success: (Updated|Installed)|✅ .* OK after update" "$LOGFILE" 2>/dev/null || echo 0)
+# --- NEW: List plugins that were attempted (Fix for Problem 1 & 3) ---
+echo "────────────────────────────"
+echo "ℹ️  Plugins Attempted:"
+cat "$BUCKET_FILE" | sed 's/^/ - /'
+echo "────────────────────────────"
+
+# --- FIXED: Only count "▶️  Updating" lines for an accurate attempt count (Fix for Problem 3) ---
+TOTAL_ATTEMPTED=$(grep -c "▶️  Updating" "$LOGFILE" 2>/dev/null || echo 0)
+TOTAL_SUCCESS=$(grep -cE "✅ .* OK after update" "$LOGFILE" 2>/dev/null || echo 0)
 TOTAL_SKIPPED=$(grep -ciE "already (up to date|updated|at the latest version)" "$LOGFILE" 2>/dev/null || echo 0)
 
 echo "🧩  ${TOTAL_ATTEMPTED:-0} plugin updates attempted"
@@ -118,8 +134,9 @@ if [ -n "$ROLLED_BACK_PLUGINS" ]; then
 fi
 
 # --- List Successful ---
+# --- FIXED: Added "‘.*’" to grep to filter out summary lines (Fix for Problem 2) ---
 UPDATED_PLUGINS=$(
-  { grep -E "Success: (Updated|Installed)" "$LOGFILE" 2>/dev/null \
+  { grep -E "Success: (Updated|Installed) ‘.*’" "$LOGFILE" 2>/dev/null \
       | sed -E "s/.*‘([^’]+)’\..*/\1/"; \
     grep -E "✅ .* OK after update\." "$LOGFILE" 2>/dev/null \
       | sed -E "s/^✅ ([^ ]+) OK after update\.$/\1/"; } \
@@ -131,7 +148,10 @@ if [ -n "$UPDATED_PLUGINS" ]; then
   echo "✅  Updated Plugins:"
   echo "$UPDATED_PLUGINS" | sed 's/^/ - /'
 else
-  echo "ℹ️  No plugins updated."
+  # Only show "No plugins updated" if none were successful AND none were rolled back
+  if [ -z "$ROLLED_BACK_PLUGINS" ] && [ "${TOTAL_SUCCESS:-0}" -eq 0 ]; then
+     echo "ℹ️  No plugins were updated."
+  fi
 fi
 
 # --- Show Failure Analysis Log ---

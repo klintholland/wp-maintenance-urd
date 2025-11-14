@@ -1,36 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="http://gmpg.org/xfn/11">
-
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-Bx4pytHkyTDy3aJKjGkGoHPt3tvv6zlwwjc3iqN7ktaiEMLDPqLSZYts2OjKcBx1" crossorigin="anonymous">
-	<link rel="stylesheet" href="http://urdusa.com/wp-content/plugins/urd-custom-maintenance/assets/css/style.css">
-
-	<title>Down for Maintenance | Underdog Racing Development</title>
-</head>
-
-<body>
-	<main>
-		<svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 655.79 176.08">
-			<title>URD_Logo</title>
-			<path class="cls-1" d="M454.41.66C449.56,6.2,439.85,16.1,439.85,16.1L482.13,16C598.23,16,623.66,36,623.66,54.82s-26.08,40-99.73,40H441.22c-19.82-8-51.38-20.88-63-25.21,35.28-6.14,48.71-17.45,48.71-32.16C426.93,18.4,395.46.57,347.64.57H223.69L196.08.51V85c0,5.56-39.64,10.33-66.94,10.33H99.51C72.2,95.31,32.57,90.54,32.57,85V.7H1.72v89c0,11.71,39.12,19.63,97.37,19.63h30.47c58.25,0,97.37-7.91,97.37-19.63V16.4c16.15.11,74.16-.52,107.4-.52S397,23.4,397,38.4c0,7.79-14.42,20.92-44.49,20.92h-43c10.77,5.9,109.51,47.8,111.15,48.51,3,1.3,20.35,1.74,23.09,1.76,13.91.11,54.49.41,71.5.41,93.77,0,140.44-25.08,140.44-54.6,0-29.78-50.93-60.26-201.32-54.72Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M304,144.4h5.32v31H304Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M0,144.4H5.31v18.19q0,4.53,1.32,6.64a4.5,4.5,0,0,0,4.09,2.17A4.71,4.71,0,0,0,15,169.14q1.44-2.26,1.44-6.69v-18h5v18q0,6.82-2.71,10.24c-1.8,2.28-4.51,3.42-8.1,3.42s-6.2-1.13-8-3.39-2.69-5.59-2.69-10Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M56.16,144.4h7.75a27.53,27.53,0,0,1,5.87.54,10.82,10.82,0,0,1,4,1.69,13,13,0,0,1,4.36,5.44,19.31,19.31,0,0,1,1.45,7.8,19.08,19.08,0,0,1-1.47,7.79,13,13,0,0,1-4.41,5.41,11.09,11.09,0,0,1-4.15,1.81,26.93,26.93,0,0,1-6.07.58H56.16ZM61.53,149V170.7h3.08a8.72,8.72,0,0,0,7-2.87c1.66-1.9,2.48-4.58,2.48-8s-.82-6.16-2.47-8-4-2.77-7.13-2.77Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M84.19,144.4h16.53v4.46H89.5v8.22h10.59v4.57H89.5v9.12h11.59v4.69H84.19Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M106.33,144.4h8.84c3.29,0,5.76.66,7.41,2a7.28,7.28,0,0,1,2.47,6,8.05,8.05,0,0,1-1.47,5A7.1,7.1,0,0,1,119.4,160a4.25,4.25,0,0,1,1.87,1.31,12.08,12.08,0,0,1,1.59,3.39l3.75,10.8H121l-3-9.4a5.73,5.73,0,0,0-1.67-2.83,4.84,4.84,0,0,0-3-.8h-1.67v13h-5.25Zm5.25,4.31v9.37h2.73a5.93,5.93,0,0,0,4-1.22,4.39,4.39,0,0,0,1.41-3.46,4.27,4.27,0,0,0-1.39-3.53,6.93,6.93,0,0,0-4.4-1.13Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M130.07,144.4h7.74a27.69,27.69,0,0,1,5.88.54,11,11,0,0,1,4,1.68,13.14,13.14,0,0,1,4.36,5.45,21.57,21.57,0,0,1,0,15.6,13,13,0,0,1-4.42,5.41,11.15,11.15,0,0,1-4.15,1.8,26.79,26.79,0,0,1-6.06.58h-7.34Zm5.37,4.62V170.7h3.08a8.72,8.72,0,0,0,7-2.87c1.66-1.9,2.49-4.58,2.49-8s-.83-6.16-2.48-8-4-2.77-7.13-2.77Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M169.72,143.76a11.34,11.34,0,0,1,9.38,4.32q3.43,4.33,3.43,11.86t-3.41,11.86a12.4,12.4,0,0,1-17.49,1.29,13.09,13.09,0,0,1-1.29-1.29q-3.41-4.31-3.4-11.86t3.41-11.88A11.29,11.29,0,0,1,169.72,143.76Zm0,4.62a6.18,6.18,0,0,0-5.35,3.14,18.25,18.25,0,0,0,0,16.74,6.12,6.12,0,0,0,10.72,0,18.47,18.47,0,0,0,0-16.72,6.15,6.15,0,0,0-5.37-3.14Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M209.44,145.4l-.55,4.87-.61-.24A18.22,18.22,0,0,0,202,148.4a9.27,9.27,0,0,0-7.37,3.28,12.51,12.51,0,0,0-2.84,8.44,11.88,11.88,0,0,0,2.72,8.06,8.4,8.4,0,0,0,10,2.4l.6-.22v-7.93h-5V158h10v16a37,37,0,0,1-4.95,1.58,17.44,17.44,0,0,1-3.74.43q-7,0-11.1-4.3t-4.06-11.73q0-7.55,4.15-11.93t11.37-4.38a22.07,22.07,0,0,1,5.4,1C208.18,145.09,208.93,145.29,209.44,145.4Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M227.6,144.4h8.83c3.3,0,5.77.66,7.41,2a7.29,7.29,0,0,1,2.47,6,8,8,0,0,1-1.46,5,7.15,7.15,0,0,1-4.18,2.61,4.4,4.4,0,0,1,1.87,1.31,12.51,12.51,0,0,1,1.59,3.39l3.75,10.8h-5.62l-3-9.4a5.55,5.55,0,0,0-1.67-2.83,4.83,4.83,0,0,0-3-.8h-1.68v13h-5.25Zm5.24,4.31v9.37h2.74a5.93,5.93,0,0,0,4-1.22,4.43,4.43,0,0,0,1.4-3.49,4.28,4.28,0,0,0-1.39-3.53,6.93,6.93,0,0,0-4.4-1.13Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M258.66,144.4h6.42l10.44,31.06h-5.74l-2.25-7.35H255.72l-2.33,7.35H248.1Zm3.11,5.18-4.52,14h8.88Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M298.53,145.4l-.34,4.9-.4-.17a16.46,16.46,0,0,0-5.87-1.61,8.84,8.84,0,0,0-7.11,3.17,12.68,12.68,0,0,0-2.65,8.43,11.77,11.77,0,0,0,2.74,8.08,9.2,9.2,0,0,0,7.24,3.1,13.93,13.93,0,0,0,4.53-1.19c.71-.28,1.24-.47,1.59-.59l.46,4.88-1.47.46a19.67,19.67,0,0,1-5.56,1.2q-7,0-11-4.3t-4-11.66q0-7.36,4-11.87a13.66,13.66,0,0,1,10.71-4.51A18.92,18.92,0,0,1,297,144.9Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M364.92,145.4l-.55,4.87-.61-.24a18.44,18.44,0,0,0-6.31-1.63,9.27,9.27,0,0,0-7.37,3.28,12.41,12.41,0,0,0-2.84,8.44,11.77,11.77,0,0,0,2.72,8.06,8.38,8.38,0,0,0,10,2.4l.61-.22v-7.93h-5V158h10v16a37.35,37.35,0,0,1-4.94,1.58,17.53,17.53,0,0,1-3.75.43q-7,0-11.09-4.3t-4-11.71q0-7.55,4.14-11.93t11.37-4.38a22.07,22.07,0,0,1,5.4,1.05C363.65,145.09,364.41,145.29,364.92,145.4Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M383.07,144.4h7.75a27.69,27.69,0,0,1,5.88.54,10.89,10.89,0,0,1,4,1.69,12.94,12.94,0,0,1,4.35,5.44,19.32,19.32,0,0,1,1.46,7.8,19.08,19.08,0,0,1-1.47,7.79,13,13,0,0,1-4.42,5.41,11.09,11.09,0,0,1-4.15,1.81,26.93,26.93,0,0,1-6.07.58h-7.33Zm5.37,4.62V170.7h3.08a8.72,8.72,0,0,0,7-2.87c1.66-1.9,2.49-4.58,2.49-8s-.83-6.16-2.48-8-4-2.77-7.13-2.77Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M411.1,144.4h16.5v4.46H416.41v8.22H427v4.57h-10.6v9.12H428v4.69H411.1Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M430.62,144.4h5.64L443.35,170l7.16-25.64h5.42l-9.62,31.06h-6.46Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M459.05,144.4h16.5v4.46H464.36v8.22H475v4.57h-10.6v9.12H476v4.69h-16.9Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M481.19,144.4h5.31v26.31h10.84v4.75H481.19Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M511,143.76a11.36,11.36,0,0,1,9.39,4.32q3.43,4.33,3.43,11.86t-3.41,11.86a12.4,12.4,0,0,1-17.49,1.29,13.09,13.09,0,0,1-1.29-1.29q-3.4-4.31-3.4-11.86t3.41-11.88A11.33,11.33,0,0,1,511,143.76Zm0,4.62a6.11,6.11,0,0,0-5.34,3.14,15.15,15.15,0,0,0-2,8.35,15.48,15.48,0,0,0,2,8.39,6.13,6.13,0,0,0,10.73,0,18.47,18.47,0,0,0,0-16.72A6.18,6.18,0,0,0,511,148.4Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M528.72,144.4h8q5.25,0,7.78,2.37c1.68,1.58,2.53,4,2.53,7.28a9.22,9.22,0,0,1-2.65,7c-1.76,1.68-4.25,2.51-7.47,2.51H534v11.85h-5.31Zm5.32,4.37v10.47h2.18a5.51,5.51,0,0,0,4-1.34,5.12,5.12,0,0,0,1.39-3.85,5.4,5.4,0,0,0-1.32-3.9,4.92,4.92,0,0,0-3.75-1.38Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M587.72,144.4h16.5v4.46H593.06v8.22h10.59v4.57H593.06v9.12h11.59v4.69H587.72Z" transform="translate(0.07 -0.02)"/><path class="cls-2" d="M635.89,144.4h19.62v4.78h-7.19v26.28H643V149.2h-7.09Z" transform="translate(0.07 -0.02)"/><polygon class="cls-2" points="27.83 144.4 34.5 144.4 45.54 168.68 45.58 144.4 50.39 144.4 50.39 175.46 43.81 175.46 32.66 151.05 32.64 175.46 27.83 175.46 27.83 144.4"/><polygon class="cls-2" points="609.95 144.4 616.63 144.4 627.66 168.67 627.7 144.4 632.52 144.4 632.51 175.46 625.93 175.46 614.79 151.05 614.76 175.46 609.95 175.46 609.95 144.4"/><path class="cls-2" d="M551,144.4h8.1l7.31,23.75L574,144.4h8v31.07h-5.09s-.1-26,0-26.95c-.21,1-8.29,26.95-8.29,26.95h-4.75l-8.11-26.92.06,26.94h-4.71Z" transform="translate(0.07 -0.02)"/><polygon class="cls-2" points="314.46 144.45 321.14 144.45 332.17 168.72 332.21 144.45 337.02 144.45 337.02 175.51 330.44 175.51 319.29 151.1 319.27 175.51 314.46 175.51 314.46 144.45"/><g id="Layer_3" data-name="Layer 3"><line class="cls-3" x1="436.33" y1="144.39" x2="451.48" y2="144.39"/></g>
-		</svg>
-
-		<p>We're down for some website updates at the moment but we'll be back in a bit.</p>
-
-		<div class="social">
-			<a href="https://www.instagram.com/underdog_racing_development/" target="_blank">
-				<i class="fab fa-instagram"></i>
-			</a>
-			<a href="https://www.facebook.com/URDUSA/" target="_blank">
-				<i class="fab fa-facebook"></i>
-			</a>
-		</div>
-	</main>
-	<div class="mako"></div>
-	<div class="guardsman"></div>
-</body>
-</html>
+postmark-approved-wordpress-plugin
+cwginstocknotifier-track-sales
+adminimize
+admin-menu-editor
+advanced-custom-fields-pro
+astra-addon
+back-in-stock-notifier-for-woocommerce
+bloom
+woocommerce-gateway-paypal-powered-by-braintree
+checkout-for-woocommerce
+classic-editor
+contact-form-7
+disable-emails
+elementor
+elementor-pro
+elementor-ymm
+woocommerce-google-analytics-integration
+heartbeat-control
+ignitewoo-updater
+jet-menu
+login-lockdown
+peters-login-redirect
+mailchimp-for-wp
+woocommerce-google-adwords-conversion-tracking-tag
+woo-permalink-manager
+recaptcha-for-woocommerce
+regenerate-thumbnails
+elementor-responsive-image
+save-with-keyboard
+simple-banner
+simple-history
+better-wp-security
+standard-box-sizes
+ultimate-elementor
+urd-custom-maintenance
+urd-woocommerce-downloads
+urd-wordpress
+woo-order-test
+woocommerce
+woo-update-manager
+woocommerce-advanced-shipping-packages
+woocommerce-anti-fraud
+woocommerce-brands
+woocommerce-brands-urd
+woocommerce-conditional-shipping-and-payments
+woocommerce-dynamic-pricing
+woocommerce-shipping-fedex
+woocommerce-filter-orders-by-product
+woocommerce-gateway-affirm
+woocommerce-multiple-boxes-shipping
+woocommerce-order-status-manager
+woocommerce-pip
+woocommerce-pip-custom-items
+woocommerce-product-addons
+woocommerce-sequential-order-numbers-pro
+woocommerce-shipment-tracking
+woocommerce-shop-as-customer
+ups-woocommerce-shipping
+woocommerce-shipping-usps
+woo-vehicle-parts-finder-ymm
+small-package-quotes-wwe-edition
+amazon-s3-and-cloudfront-pro
+duplicate-post
+wordpress-seo
+wpseo-woocommerce
+wordpress-seo-premium
+yoast-test-helper
+woocommerce-zapier
+kinsta-mu-plugins
