@@ -1,0 +1,7 @@
+🔎 Validation @ 2025-11-14-014554
+✅ Home OK (200)
+✅ PDP OK (200)
+✅ Cart OK (200)
+✅ Checkout OK (200)
+✅ admin reachable/secured (200) @ https://stg-urd-staging.kinsta.cloud/piads/
+🔹 Last 50 lines of Woo logs:

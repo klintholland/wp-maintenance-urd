@@ -104,24 +104,38 @@ echo ""
 echo "────────────────────────────"
 echo "📊 Generating update summary for $TIER_NAME_UPPER..."
 
-# --- NEW: List plugins that were attempted (Fix for Problem 1 & 3) ---
-echo "────────────────────────────"
-echo "ℹ️  Plugins Attempted:"
-cat "$BUCKET_FILE" | sed 's/^/ - /'
-echo "────────────────────────────"
-
-# --- FIXED: Only count "▶️  Updating" lines for an accurate attempt count (Fix for Problem 3) ---
+# --- Calculate totals first ---
 TOTAL_ATTEMPTED=$(grep -c "▶️  Updating" "$LOGFILE" 2>/dev/null || echo 0)
 TOTAL_SUCCESS=$(grep -cE "✅ .* OK after update" "$LOGFILE" 2>/dev/null || echo 0)
 TOTAL_SKIPPED=$(grep -ciE "already (up to date|updated|at the latest version)" "$LOGFILE" 2>/dev/null || echo 0)
+FAILED_COUNT=$(( TOTAL_ATTEMPTED - TOTAL_SUCCESS ))
 
+# --- Show totals ---
 echo "🧩  ${TOTAL_ATTEMPTED:-0} plugin updates attempted"
 echo "✅  ${TOTAL_SUCCESS:-0} successfully updated"
 echo "⏭️  ${TOTAL_SKIPPED:-0} already up-to-date"
-
-FAILED_COUNT=$(( TOTAL_ATTEMPTED - TOTAL_SUCCESS ))
 if [ "$FAILED_COUNT" -gt 0 ]; then
     echo "⚠️  $FAILED_COUNT failed or were rolled back"
+fi
+
+# --- List Attempted ---
+echo "────────────────────────────"
+echo "ℹ️  Plugins Attempted:"
+cat "$BUCKET_FILE" | sed 's/^/ - /'
+
+# --- List Successful ---
+# This list is now built ONLY from the "✅ ... OK after update" log line,
+# so it will directly match the TOTAL_SUCCESS count.
+UPDATED_PLUGINS=$(
+    grep -E "✅ .* OK after update\." "$LOGFILE" 2>/dev/null \
+      | sed -E "s/^✅ ([^ ]+) OK after update\.$/\1/" \
+      | sort -u
+)
+
+if [ -n "$UPDATED_PLUGINS" ]; then
+  echo "────────────────────────────"
+  echo "✅  Successfully Updated Plugins:"
+  echo "$UPDATED_PLUGINS" | sed 's/^/ - /'
 fi
 
 # --- List Failures / Rollbacks ---
@@ -133,33 +147,17 @@ if [ -n "$ROLLED_BACK_PLUGINS" ]; then
     echo "$ROLLED_BACK_PLUGINS" | sed 's/^/ - /'
 fi
 
-# --- List Successful ---
-# --- FIXED: Added "‘.*’" to grep to filter out summary lines (Fix for Problem 2) ---
-UPDATED_PLUGINS=$(
-  { grep -E "Success: (Updated|Installed) ‘.*’" "$LOGFILE" 2>/dev/null \
-      | sed -E "s/.*‘([^’]+)’\..*/\1/"; \
-    grep -E "✅ .* OK after update\." "$LOGFILE" 2>/dev/null \
-      | sed -E "s/^✅ ([^ ]+) OK after update\.$/\1/"; } \
-  | sort -u
-)
-
-if [ -n "$UPDATED_PLUGINS" ]; then
-  echo "────────────────────────────"
-  echo "✅  Updated Plugins:"
-  echo "$UPDATED_PLUGINS" | sed 's/^/ - /'
-else
-  # Only show "No plugins updated" if none were successful AND none were rolled back
-  if [ -z "$ROLLED_BACK_PLUGINS" ] && [ "${TOTAL_SUCCESS:-0}" -eq 0 ]; then
-     echo "ℹ️  No plugins were updated."
-  fi
-fi
-
-# --- Show Failure Analysis Log ---
+# --- Show Failure Analysis Log (if any rollbacks) ---
 FAILURE_LOG="$LOGDIR/failures.log"
-if [ -s "$FAILURE_LOG" ]; then 
+if [ -n "$ROLLED_BACK_PLUGINS" ] && [ -s "$FAILURE_LOG" ]; then 
   echo "────────────────────────────"
   echo "ℹ️  Failure Analysis (from analyze-update-log.sh):"
   cat "$FAILURE_LOG" | sed 's/^/ - /'
+fi
+
+# --- Final "no updates" message ---
+if [ "${TOTAL_SUCCESS:-0}" -eq 0 ] && [ -z "$ROLLED_BACK_PLUGINS" ]; then
+     echo "ℹ️  No plugins were updated or rolled back."
 fi
 
 echo "────────────────────────────"
